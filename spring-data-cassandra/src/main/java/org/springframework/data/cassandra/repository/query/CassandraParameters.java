@@ -78,7 +78,7 @@ public class CassandraParameters extends Parameters<CassandraParameters, Cassand
 	 * @since 2.0
 	 */
 	public int getQueryOptionsIndex() {
-		return (queryOptionsIndex != null ? queryOptionsIndex : -1);
+		return queryOptionsIndex != null ? queryOptionsIndex : -1;
 	}
 
 	/**

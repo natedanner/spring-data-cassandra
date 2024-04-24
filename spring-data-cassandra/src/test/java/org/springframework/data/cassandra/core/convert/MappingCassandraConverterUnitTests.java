@@ -871,14 +871,13 @@ public class MappingCassandraConverterUnitTests {
 	@Test // GH-1449
 	void shouldConsiderProgrammaticConverterRead() {
 
-		CassandraCustomConversions conversions = CassandraCustomConversions.create(adapter -> {
+		CassandraCustomConversions conversions = CassandraCustomConversions.create(adapter ->
 
 			adapter.configurePropertyConversions(registrar -> {
 
 				registrar.registerConverter(AllPossibleTypes.class, "id", String.class)
 						.writing((from, ctx) -> from.toUpperCase()).reading((from, ctx) -> from.toLowerCase());
-			});
-		});
+			}));
 
 		MappingCassandraConverter converter = new MappingCassandraConverter(mappingContext);
 		converter.setCustomConversions(conversions);
@@ -893,14 +892,13 @@ public class MappingCassandraConverterUnitTests {
 	@Test // GH-1449
 	void shouldConsiderProgrammaticConverterWrite() {
 
-		CassandraCustomConversions conversions = CassandraCustomConversions.create(adapter -> {
+		CassandraCustomConversions conversions = CassandraCustomConversions.create(adapter ->
 
 			adapter.configurePropertyConversions(registrar -> {
 
 				registrar.registerConverter(AllPossibleTypes.class, "id", String.class)
 						.writing((from, ctx) -> from.toUpperCase()).reading((from, ctx) -> from.toLowerCase());
-			});
-		});
+			}));
 
 		MappingCassandraConverter converter = new MappingCassandraConverter(mappingContext);
 		converter.setCustomConversions(conversions);
@@ -1401,7 +1399,7 @@ public class MappingCassandraConverterUnitTests {
 
 	}
 
-	private static class WithValue {
+	private static final class WithValue {
 
 		private final @Id String id;
 		private final @Transient String firstname;
@@ -1542,10 +1540,12 @@ public class MappingCassandraConverterUnitTests {
 
 		@Override
 		public boolean equals(Object o) {
-			if (this == o)
+			if (this == o) {
 				return true;
-			if (o == null || getClass() != o.getClass())
+			}
+			if (o == null || getClass() != o.getClass()) {
 				return false;
+			}
 
 			EmbeddedWithSimpleTypes that = (EmbeddedWithSimpleTypes) o;
 

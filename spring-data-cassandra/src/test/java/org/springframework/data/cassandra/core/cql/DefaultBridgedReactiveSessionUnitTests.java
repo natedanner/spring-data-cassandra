@@ -202,9 +202,8 @@ class DefaultBridgedReactiveSessionUnitTests {
 
 		Flux<Row> flux = reactiveSession.execute(SimpleStatement.newInstance("")).flatMapMany(ReactiveResultSet::rows);
 
-		StepVerifier.create(flux, 0).thenRequest(10).expectNextCount(10).then(() -> {
-			verify(resultSet).fetchNextPage();
-		}).thenRequest(10).verifyComplete();
+		StepVerifier.create(flux, 0).thenRequest(10).expectNextCount(10).then(() ->
+			verify(resultSet).fetchNextPage()).thenRequest(10).verifyComplete();
 
 		verify(emptyResultSet).hasMorePages();
 		verify(emptyResultSet).currentPage();

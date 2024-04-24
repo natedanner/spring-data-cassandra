@@ -49,7 +49,7 @@ import com.datastax.oss.driver.api.core.type.UserDefinedType;
  */
 public class CassandraMappingContextUnitTests {
 
-	private CassandraMappingContext mappingContext = new CassandraMappingContext();
+	private final CassandraMappingContext mappingContext = new CassandraMappingContext();
 
 	@BeforeEach
 	void before() {
@@ -86,10 +86,9 @@ public class CassandraMappingContextUnitTests {
 
 		CassandraPersistentProperty idProperty = persistentEntity.getIdProperty();
 
-		assertThat(idProperty).satisfies(actual -> {
+		assertThat(idProperty).satisfies(actual ->
 
-			assertThat(actual.getColumnName()).hasToString("foo");
-		});
+			assertThat(actual.getColumnName()).hasToString("foo"));
 	}
 
 	@Table

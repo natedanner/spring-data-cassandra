@@ -85,10 +85,9 @@ class ReactiveCqlTemplateIntegrationTests extends AbstractKeyspaceCreatingIntegr
 	void queryForObjectShouldReturnMap() {
 
 		template.queryForMap("SELECT * FROM user;").as(StepVerifier::create) //
-				.consumeNextWith(actual -> {
+				.consumeNextWith(actual ->
 
-					assertThat(actual).containsEntry("id", "WHITE").containsEntry("username", "Walter");
-				}).verifyComplete();
+					assertThat(actual).containsEntry("id", "WHITE").containsEntry("username", "Walter")).verifyComplete();
 	}
 
 	@Test // DATACASS-335
@@ -113,10 +112,9 @@ class ReactiveCqlTemplateIntegrationTests extends AbstractKeyspaceCreatingIntegr
 	void queryForObjectStatementShouldReturnMap() {
 
 		template.queryForMap(SimpleStatement.newInstance("SELECT * FROM user")).as(StepVerifier::create) //
-				.consumeNextWith(actual -> {
+				.consumeNextWith(actual ->
 
-					assertThat(actual).containsEntry("id", "WHITE").containsEntry("username", "Walter");
-				}).verifyComplete();
+					assertThat(actual).containsEntry("id", "WHITE").containsEntry("username", "Walter")).verifyComplete();
 	}
 
 	@Test // DATACASS-335
@@ -140,10 +138,9 @@ class ReactiveCqlTemplateIntegrationTests extends AbstractKeyspaceCreatingIntegr
 	void queryForObjectWithArgsShouldReturnMap() {
 
 		template.queryForMap("SELECT * FROM user WHERE id = ?;", "WHITE").as(StepVerifier::create) //
-				.consumeNextWith(actual -> {
+				.consumeNextWith(actual ->
 
-					assertThat(actual).containsEntry("id", "WHITE").containsEntry("username", "Walter");
-				}).verifyComplete();
+					assertThat(actual).containsEntry("id", "WHITE").containsEntry("username", "Walter")).verifyComplete();
 	}
 
 	@Test // DATACASS-767
@@ -153,10 +150,9 @@ class ReactiveCqlTemplateIntegrationTests extends AbstractKeyspaceCreatingIntegr
 		template.setKeyspace(CqlIdentifier.fromCql(keyspace));
 
 		template.queryForMap("SELECT * FROM user;").as(StepVerifier::create) //
-				.consumeNextWith(actual -> {
+				.consumeNextWith(actual ->
 
-					assertThat(actual).containsEntry("id", "WHITE").containsEntry("username", "Walter");
-				}).verifyComplete();
+					assertThat(actual).containsEntry("id", "WHITE").containsEntry("username", "Walter")).verifyComplete();
 	}
 
 	@Test // DATACASS-767
@@ -166,10 +162,9 @@ class ReactiveCqlTemplateIntegrationTests extends AbstractKeyspaceCreatingIntegr
 		template.setKeyspace(CqlIdentifier.fromCql("non_existing"));
 
 		template.queryForMap("SELECT * FROM user;").as(StepVerifier::create) //
-				.consumeErrorWith(e -> {
+				.consumeErrorWith(e ->
 					assertThat(e).isInstanceOf(CassandraInvalidQueryException.class)
-							.hasMessageContaining("Keyspace 'non_existing' does not exist");
-				}).verify();
+							.hasMessageContaining("Keyspace 'non_existing' does not exist")).verify();
 
 	}
 }

@@ -43,11 +43,9 @@ public enum RowToMapConverter implements Converter<Row, Map<String, Object>> {
 		ColumnDefinitions cols = row.getColumnDefinitions();
 		Map<String, Object> map = new HashMap<>(cols.size());
 
-		cols.forEach(columnDefinition -> {
+		cols.forEach(columnDefinition ->
 			map.put(columnDefinition.getName().toString(),
-					row.isNull(columnDefinition.getName()) ? null : row.getObject(columnDefinition.getName()));
-
-		});
+					row.isNull(columnDefinition.getName()) ? null : row.getObject(columnDefinition.getName())));
 
 		return map;
 	}

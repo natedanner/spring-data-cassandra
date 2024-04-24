@@ -149,9 +149,8 @@ class ReactiveCassandraTemplateUnitTests {
 		when(reactiveResultSet.rows()).thenThrow(new NoNodeAvailableException());
 
 		template.select("SELECT * FROM users", User.class).as(StepVerifier::create) //
-				.consumeErrorWith(e -> {
-					assertThat(e).hasRootCauseInstanceOf(NoNodeAvailableException.class);
-				}).verify();
+				.consumeErrorWith(e ->
+					assertThat(e).hasRootCauseInstanceOf(NoNodeAvailableException.class)).verify();
 	}
 
 	@Test // DATACASS-335
@@ -192,10 +191,9 @@ class ReactiveCassandraTemplateUnitTests {
 
 		template.query(User.class).as(UserProjection.class).first() //
 				.as(StepVerifier::create) //
-				.assertNext(actual -> {
+				.assertNext(actual ->
 
-					assertThat(actual.getFirstname()).isEqualTo("Walter");
-				}).verifyComplete();
+					assertThat(actual.getFirstname()).isEqualTo("Walter")).verifyComplete();
 
 		verify(session).execute(statementCaptor.capture());
 		assertThat(render(statementCaptor.getValue())).isEqualTo("SELECT firstname FROM users LIMIT 1");
@@ -319,10 +317,9 @@ class ReactiveCassandraTemplateUnitTests {
 		when(session.execute(any(Statement.class))).thenReturn(Mono.error(new NoNodeAvailableException()));
 
 		template.insert(new User("heisenberg", "Walter", "White")).as(StepVerifier::create) //
-				.consumeErrorWith(e -> {
+				.consumeErrorWith(e ->
 
-					assertThat(e).hasRootCauseInstanceOf(NoNodeAvailableException.class);
-				}).verify();
+					assertThat(e).hasRootCauseInstanceOf(NoNodeAvailableException.class)).verify();
 	}
 
 	@Test // DATACASS-335, DATACASS-618

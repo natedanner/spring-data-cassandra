@@ -236,9 +236,8 @@ public class EmbeddedEntityOperations {
 		@Override
 		public void doWithProperties(PropertyHandler<CassandraPersistentProperty> handler) {
 
-			delegate.doWithProperties((PropertyHandler<CassandraPersistentProperty>) property -> {
-				handler.doWithPersistentProperty(wrap(property));
-			});
+			delegate.doWithProperties((PropertyHandler<CassandraPersistentProperty>) property ->
+				handler.doWithPersistentProperty(wrap(property)));
 		}
 
 		@Override

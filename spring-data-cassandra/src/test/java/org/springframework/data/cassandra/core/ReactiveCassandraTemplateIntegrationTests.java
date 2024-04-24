@@ -355,9 +355,8 @@ class ReactiveCassandraTemplateIntegrationTests extends AbstractKeyspaceCreating
 
 		Mono<Slice<User>> slice = template.slice(query, User.class);
 
-		slice.as(StepVerifier::create).consumeNextWith(it -> {
-			assertThat(it).isEmpty();
-		}).verifyComplete();
+		slice.as(StepVerifier::create).consumeNextWith(it ->
+			assertThat(it).isEmpty()).verifyComplete();
 	}
 
 	private FirstStep<User> verifyUser(String userId) {

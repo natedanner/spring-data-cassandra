@@ -73,7 +73,7 @@ class DefaultColumnType implements ColumnType {
 	@Nullable
 	@Override
 	public ColumnType getComponentType() {
-		return !parameters.isEmpty() ? parameters.get(0) : null;
+		return parameters.isEmpty() ? null : parameters.get(0);
 	}
 
 	@Nullable

@@ -109,7 +109,7 @@ public class CqlSessionFactoryBean
 
 	private SchemaAction schemaAction = SchemaAction.NONE;
 
-	private boolean suspendLifecycleSchemaRefresh = false;
+	private boolean suspendLifecycleSchemaRefresh;
 
 	private @Nullable SessionBuilderConfigurer sessionBuilderConfigurer;
 
@@ -422,7 +422,7 @@ public class CqlSessionFactoryBean
 	 */
 	@Deprecated
 	public void setStartupScripts(@Nullable List<String> scripts) {
-		this.startupScripts = (scripts != null ? new ArrayList<>(scripts) : Collections.emptyList());
+		this.startupScripts = scripts != null ? new ArrayList<>(scripts) : Collections.emptyList();
 	}
 
 	/**
@@ -563,9 +563,8 @@ public class CqlSessionFactoryBean
 		keyspaceStartupSpecifications.addAll(this.keyspaceCreations);
 		keyspaceStartupSpecifications.addAll(this.keyspaceAlterations);
 
-		Runnable schemaActionRunnable = () -> {
+		Runnable schemaActionRunnable = () ->
 			executeSpecificationsAndScripts(keyspaceStartupSpecifications, this.keyspaceStartupScripts, session);
-		};
 
 		if (this.suspendLifecycleSchemaRefresh) {
 			SchemaUtils.withSuspendedAsyncSchemaRefresh(session, schemaActionRunnable);
@@ -611,12 +610,16 @@ public class CqlSessionFactoryBean
 		switch (this.schemaAction) {
 			case RECREATE_DROP_UNUSED:
 				dropUnused = true;
+				break;
 			case RECREATE:
 				drop = true;
+				break;
 			case CREATE_IF_NOT_EXISTS:
 				ifNotExists = SchemaAction.CREATE_IF_NOT_EXISTS.equals(this.schemaAction);
+				break;
 			case CREATE:
 				create = true;
+				break;
 			case NONE:
 			default:
 				// do nothing
@@ -684,13 +687,11 @@ public class CqlSessionFactoryBean
 
 		if (this.session != null) {
 
-			Runnable schemaActionRunnable = () -> {
+			Runnable schemaActionRunnable = () ->
 				executeCql(getShutdownScripts().stream(), this.session);
-			};
 
-			Runnable systemSchemaActionRunnable = () -> {
+			Runnable systemSchemaActionRunnable = () ->
 				executeSpecificationsAndScripts(this.keyspaceDrops, this.keyspaceShutdownScripts, this.systemSession);
-			};
 
 			if (this.suspendLifecycleSchemaRefresh) {
 				SchemaUtils.withSuspendedAsyncSchemaRefresh(this.session, schemaActionRunnable);
@@ -781,7 +782,7 @@ public class CqlSessionFactoryBean
 	/**
 	 * Value object to encapsulate host and port.
 	 */
-	private static class HostAndPort {
+	private static final class HostAndPort {
 
 		private final String host;
 

@@ -75,9 +75,8 @@ class AbstractSessionConfigurationIntegrationTests {
 		@Nullable
 		@Override
 		protected DriverConfigLoaderBuilderConfigurer getDriverConfigLoaderBuilderConfigurer() {
-			return it -> {
+			return it ->
 				it.startProfile("foo").withString(DefaultDriverOption.SESSION_NAME, "hello-world").endProfile();
-			};
 		}
 
 		@Nullable

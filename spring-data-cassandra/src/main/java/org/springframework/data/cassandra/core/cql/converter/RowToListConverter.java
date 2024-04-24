@@ -43,10 +43,8 @@ public enum RowToListConverter implements Converter<Row, List<Object>> {
 		ColumnDefinitions cols = row.getColumnDefinitions();
 		List<Object> objects = new ArrayList<>();
 
-		cols.forEach(columnDefinition -> {
-			objects.add(row.isNull(columnDefinition.getName()) ? null : row.getObject(columnDefinition.getName()));
-
-		});
+		cols.forEach(columnDefinition ->
+			objects.add(row.isNull(columnDefinition.getName()) ? null : row.getObject(columnDefinition.getName())));
 
 		return objects;
 	}

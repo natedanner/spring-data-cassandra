@@ -54,7 +54,7 @@ import com.datastax.oss.driver.api.core.type.codec.registry.CodecRegistry;
  */
 public class ColumnTypeResolverUnitTests {
 
-	private CassandraMappingContext mappingContext = new CassandraMappingContext();
+	private final CassandraMappingContext mappingContext = new CassandraMappingContext();
 	private ColumnTypeResolver resolver = new DefaultColumnTypeResolver(mappingContext,
 			SchemaFactory.ShallowUserTypeResolver.INSTANCE, () -> CodecRegistry.DEFAULT,
 			mappingContext::getCustomConversions);
@@ -342,14 +342,13 @@ public class ColumnTypeResolverUnitTests {
 		CassandraPersistentEntity<?> entity = mappingContext
 				.getRequiredPersistentEntity(TypeWithPropertyValueConverters.class);
 
-		CassandraCustomConversions conversions = CassandraCustomConversions.create(adapter -> {
+		CassandraCustomConversions conversions = CassandraCustomConversions.create(adapter ->
 
 			adapter.configurePropertyConversions(registrar -> {
 
 				registrar.registerConverter(TypeWithPropertyValueConverters.class, "programmatic", String.class)
 						.writing((from, ctx) -> from.length()).reading((from, ctx) -> from.toString());
-			});
-		});
+			}));
 
 		resolver = new DefaultColumnTypeResolver(mappingContext, SchemaFactory.ShallowUserTypeResolver.INSTANCE,
 				() -> CodecRegistry.DEFAULT, () -> conversions);
@@ -364,13 +363,12 @@ public class ColumnTypeResolverUnitTests {
 		CassandraPersistentEntity<?> entity = mappingContext
 				.getRequiredPersistentEntity(TypeWithPropertyValueConverters.class);
 
-		CassandraCustomConversions conversions = CassandraCustomConversions.create(adapter -> {
+		CassandraCustomConversions conversions = CassandraCustomConversions.create(adapter ->
 
 			adapter.configurePropertyConversions(registrar -> {
 				registrar.registerConverter(TypeWithPropertyValueConverters.class, "programmatic",
 						new CharacterCountingConverter());
-			});
-		});
+			}));
 
 		resolver = new DefaultColumnTypeResolver(mappingContext, SchemaFactory.ShallowUserTypeResolver.INSTANCE,
 				() -> CodecRegistry.DEFAULT, () -> conversions);
@@ -459,6 +457,6 @@ public class ColumnTypeResolverUnitTests {
 	}
 
 	enum MyEnum {
-		INSTANCE;
+		INSTANCE
 	}
 }

@@ -162,9 +162,8 @@ class CassandraPersistentEntitySchemaDropperUnitTests extends CassandraPersisten
 
 		Map<CqlIdentifier, UserDefinedType> result = new LinkedHashMap<>();
 
-		Arrays.stream(types).forEach(type -> {
-			result.put(type.getName(), type);
-		});
+		Arrays.stream(types).forEach(type ->
+			result.put(type.getName(), type));
 
 		return result;
 	}
@@ -173,9 +172,8 @@ class CassandraPersistentEntitySchemaDropperUnitTests extends CassandraPersisten
 
 		Map<CqlIdentifier, TableMetadata> result = new LinkedHashMap<>();
 
-		Arrays.stream(tables).forEach(table -> {
-			result.put(table.getName(), table);
-		});
+		Arrays.stream(tables).forEach(table ->
+			result.put(table.getName(), table));
 
 		return result;
 	}

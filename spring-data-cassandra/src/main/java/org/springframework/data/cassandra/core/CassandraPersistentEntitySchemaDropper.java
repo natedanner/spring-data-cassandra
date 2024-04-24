@@ -127,9 +127,8 @@ public class CassandraPersistentEntitySchemaDropper {
 
 		Set<CqlIdentifier> globalSeen = new LinkedHashSet<>();
 
-		knownUserTypes.forEach(userType -> {
-			toDrop.addAll(dependencyGraph.getDropOrder(userType.getName(), globalSeen::add));
-		});
+		knownUserTypes.forEach(userType ->
+			toDrop.addAll(dependencyGraph.getDropOrder(userType.getName(), globalSeen::add)));
 
 		return toDrop;
 	}
